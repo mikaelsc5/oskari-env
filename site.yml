@@ -1,0 +1,12 @@
+---
+# file: site.yml
+# Directory Layout based on http://docs.ansible.com/playbooks_best_practices.html
+# Distribution agnostic playbooks
+# https://raymii.org/s/tutorials/Ansible_-_Only_if_on_specific_distribution_or_distribution_version.html
+
+# - hosts: all
+#   tasks:
+#   - apt: pkg=python-keyczar state=present update_cache=yes
+#     sudo: yes
+
+- include: webservers.yml

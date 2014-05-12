@@ -1,0 +1,9 @@
+---
+# file: host_vars/webserver1
+# individual setting goes here
+db_name: "oskaridb"
+db_username: "vagrant"
+db_password: "secret"
+
+# geonetwork database params
+db_geonetwork_name: "geonetwork_2_10"

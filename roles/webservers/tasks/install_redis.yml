@@ -1,0 +1,35 @@
+---
+#########################
+# Redis - redis-cli 2.8.3
+# #######################
+- unarchive: src=redis-2.6.14.tar.gz dest=/home/{{ansible_ssh_user}}/
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
+
+- name: build redis
+  shell:
+    cd /home/{{ansible_ssh_user}}/redis-2.6.14;
+    make;
+    sudo mv /home/{{ansible_ssh_user}}/redis-2.6.14/src/redis-* /usr/sbin/;
+    sudo rm /usr/sbin/redis-*.o;
+    sudo rm /usr/sbin/redis-*.c;
+    sudo chmod 0755 /usr/sbin/redis-*;
+    sudo chown root:root /usr/sbin/redis-*;
+    sudo mkdir -p /etc/redis;
+    sudo cp /vagrant/provisioning/conf/etc/redis/redis.conf /etc/redis/;
+    sudo mkdir -p /data/log/redis;
+    sudo cp /vagrant/provisioning/conf/etc/init.d/redis-server.sh /etc/init.d/redis-server;
+    sudo chmod a+x /etc/init.d/redis-server;
+    creates=/etc/redis
+  notify:
+    - start redis-server
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
+
+
+- name: Install Redis
+  portage: package={{item}} state=present sync=yes update=yes
+  with_items:
+    - dev-db/redis
+  sudo: yes
+  notify:
+    - start redis
+  when: ansible_distribution == 'Gentoo'

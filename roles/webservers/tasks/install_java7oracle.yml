@@ -1,0 +1,76 @@
+---
+##################################################################################################################################################################
+# Oracle Java JDK - java version "1.7.0_55", based upon http://hendrelouw73.wordpress.com/2013/10/16/how-to-install-oracle-java-7-update-45-on-ubuntu-12-04-linux/
+# ################################################################################################################################################################
+- name: Create Java directory
+  file: path=/usr/lib/jvm/ state=directory owner=root group=root recurse=yes
+  sudo: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
+
+- name: Accept Java license and use
+  copy: src=conf/etc/portage/ dest=/etc/portage/ owner=root group=root mode=0644
+  sudo: yes
+  when: ansible_distribution == 'Gentoo'
+
+- name: Ensure Oracle JDK is downloaded
+  shell:
+    'wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u55-b13/jdk-7u55-linux-x64.tar.gz
+    chdir=/home/{{ansible_ssh_user}}/oskari-env/provisioning/roles/webservers/files/
+    creates=/home/{{ansible_ssh_user}}/oskari-env/provisioning/roles/webservers/files/jdk-7u55-linux-x64.tar.gz'
+# paths differ depending on push or pull, above is pull, below is push
+#    chdir=/vagrant/provisioning/roles/webservers/files/
+#    creates=/vagrant/provisioning/roles/webservers/files/jdk-7u55-linux-x64.tar.gz'
+  sudo: yes
+
+
+- name: Extract Java binaries
+  unarchive: src=jdk-7u55-linux-x64.tar.gz dest=/usr/lib/jvm/
+  sudo: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
+
+- name: Ensure distfiles directory exists
+  file: path=/usr/portage/distfiles state=directory owner=portage group=portage recurse=yes
+  sudo: yes
+  when: ansible_distribution == 'Gentoo'
+
+- name: Copy Java binaries
+  copy: src=jdk-7u55-linux-x64.tar.gz dest=/usr/portage/distfiles/
+  sudo: yes
+  when: ansible_distribution == 'Gentoo'
+
+- name: Ensure Java binaries are owned by portage
+  file: path=/usr/portage/distfiles/jdk-7u55-linux-x64.tar.gz state=file owner=portage group=portage
+  sudo: yes
+  when: ansible_distribution == 'Gentoo'
+
+- name: Install Oracle Java
+  portage: package={{item}} state=present sync=yes update=yes
+  with_items:
+    - dev-java/oracle-jdk-bin
+  sudo: yes
+  when: ansible_distribution == 'Gentoo'
+
+
+- name: Configure java and set permissions
+  shell:
+    update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.7.0_55/bin/java" 1;
+    update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.7.0_55/bin/javac" 1;
+    update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/lib/jvm/jdk1.7.0_55/bin/javaws" 1;
+    update-alternatives --install "/usr/bin/jar" "jar" "/usr/lib/jvm/jdk1.7.0_55/bin/jar" 1;
+    update-alternatives --set "java" "/usr/lib/jvm/jdk1.7.0_55/bin/java";
+    update-alternatives --set "javac" "/usr/lib/jvm/jdk1.7.0_55/bin/javac";
+    update-alternatives --set "javaws" "/usr/lib/jvm/jdk1.7.0_55/bin/javaws";
+    update-alternatives --set "jar" "/usr/lib/jvm/jdk1.7.0_55/bin/jar";
+    chmod a+x /usr/bin/java;
+    chmod a+x /usr/bin/javac;
+    chmod a+x /usr/bin/javaws;
+    chmod a+x /usr/bin/jar;
+    chown -R root:root /usr/lib/jvm/jdk1.7.0_55;
+  sudo: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
+
+- name: Configure java and set permissions
+  shell:
+    java-config --set-system-vm oracle-jdk-bin-1.7
+  sudo: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'

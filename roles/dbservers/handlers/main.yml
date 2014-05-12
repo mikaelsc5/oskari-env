@@ -1,0 +1,9 @@
+---
+# file: roles/dbservers/handlers/main.yml
+- name: restart postgresql
+  service: name=postgresql state=restarted
+  sudo: yes
+
+- name: restart postgresql-9.3
+  service: name=postgresql-9.3 state=restarted
+  sudo: yes

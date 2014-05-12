@@ -1,0 +1,135 @@
+---
+
+- name: Copy printout configs
+  copy: src=conf/etc/default/oskari-printout-backend.log4j dest=/etc/default/oskari-printout-backend.log4j owner=root group=root mode=0755
+  sudo: yes
+
+- name: Copy printout configs
+  copy: src=conf/etc/default/oskari-printout-backend.logging dest=/etc/default/oskari-printout-backend.logging owner=root group=root mode=0755
+  sudo: yes
+
+- name: Copy printout configs
+  copy: src=conf/etc/default/oskari-printout-backend.properties dest=/etc/default/oskari-printout-backend.properties owner=root group=root mode=0755
+  sudo: yes
+
+- unarchive: src=jetty-distribution-8.1.11.v20130520.tar.gz dest=/home/{{ansible_ssh_user}}/
+  sudo: yes
+
+- name: Create jetty directories
+  shell:
+    mkdir -p /data/log/jetty &&
+    cp -R /home/{{ansible_ssh_user}}/jetty-distribution-8.1.11.v20130520 /opt/jetty/ &&
+    mkdir -p /opt/jetty/work &&
+    chown -R root:root /opt/jetty &&
+    rm -rf /opt/jetty/webapps/test* &&
+    rm -rf /opt/jetty/webapps/async* &&
+    rm -rf /opt/jetty/contexts/test*
+    creates=/opt/jetty
+  sudo: yes
+
+- name: Copy jetty settings
+  copy: src=conf/etc/default/jetty dest=/etc/default/ owner=root group=root mode=0755
+  sudo: yes
+
+- name: Copy jetty environment settings
+  copy: src=conf/opt/jetty/etc/jetty.xml dest=/opt/jetty/etc/ owner=root group=root mode=0644
+  sudo: yes
+
+- name: Comment out contexts
+  lineinfile:
+    dest=/opt/jetty/start.ini
+    regexp='^etc/jetty-contexts.xml'
+    line='#etc/jetty-contexts.xml'
+    backrefs=yes
+    state=present
+  sudo: yes
+
+- name: Comment out testrealm
+  lineinfile:
+    dest=/opt/jetty/start.ini
+    regexp='^etc/jetty-testrealm.xml'
+    line='#etc/jetty-testrealm.xml'
+    backrefs=yes
+    state=present
+  sudo: yes
+
+- name: Setup jetty service
+  shell:
+    cp /opt/jetty/bin/jetty.sh /etc/init.d/jetty &&
+    chmod a+x /etc/init.d/jetty
+    creates=/etc/init.d/jetty
+  notify:
+    - start jetty
+  sudo: yes
+
+
+- unarchive: src=jetty-hightide-8.1.14.v20131031.tar.gz dest=/home/{{ansible_ssh_user}}/
+  sudo: yes
+
+- name: Create jetty-hightide directories
+  shell:
+    mkdir -p /data/log/jetty-hightide &&
+    cp -R /home/{{ansible_ssh_user}}/jetty-hightide-8.1.14.v20131031 /opt/jetty-hightide/ &&
+    mkdir -p /opt/jetty-hightide/work &&
+    chown -R root:root /opt/jetty-hightide &&
+    rm -rf /opt/jetty-hightide/webapps/test* &&
+    rm -rf /opt/jetty-hightide/webapps/async* &&
+    rm -rf /opt/jetty-hightide/contexts/test*
+    creates=/opt/jetty-hightide
+  sudo: yes
+
+- name: Copy jetty-hightide settings
+  copy: src=conf/etc/default/jetty-hightide dest=/etc/default/ owner=root group=root mode=0755
+  sudo: yes
+
+- name: Copy jetty environment settings
+  copy: src=conf/opt/jetty/etc/jetty-hightide.xml dest=/opt/jetty-hightide/etc/jetty.xml owner=root group=root mode=0644
+  sudo: yes
+
+- name: Copy jetty-jaas environment settings
+  copy: src=conf/opt/jetty/etc/jetty-jaas.xml dest=/opt/jetty-hightide/etc/ owner=root group=root mode=0644
+  sudo: yes
+
+- name: Comment out contexts
+  lineinfile:
+    dest=/opt/jetty-hightide/start.ini
+    regexp='^etc/jetty-contexts.xml'
+    line='#etc/jetty-contexts.xml'
+    backrefs=yes
+    state=present
+  sudo: yes
+
+- name: Comment out testrealm
+  lineinfile:
+    dest=/opt/jetty-hightide/start.ini
+    regexp='^etc/jetty-testrealm.xml'
+    line='#etc/jetty-testrealm.xml'
+    backrefs=yes
+    state=present
+  sudo: yes
+
+- name: Copy external libs
+  copy: src=jdbc/ dest=/opt/jetty-hightide/lib/jdbc/ owner=root group=root mode=0644
+  sudo: yes
+
+- name: Copy oskari-ext.properties and jndi-login.conf
+  copy: src=conf/opt/jetty/resources/ dest=/opt/jetty-hightide/resources/ owner=root group=root mode=0644
+  sudo: yes
+
+- name: modify jetty name, fully quoted as it contains special characters
+  lineinfile:
+    dest=/opt/jetty-hightide/bin/jetty.sh 
+    regexp='/default/jetty{'
+    line='for CONFIG in $ETC/default/jetty-hightide{,8} $HOME/.jettyrc; do'
+    backrefs=yes
+    state=present
+  sudo: yes
+
+- name: Setup service settings
+  shell:
+    cp /opt/jetty-hightide/bin/jetty.sh /etc/init.d/jetty-hightide &&
+    chmod a+x /etc/init.d/jetty-hightide
+    creates=/etc/init.d/jetty-hightide
+  notify:
+    - start jetty-hightide
+  sudo: yes

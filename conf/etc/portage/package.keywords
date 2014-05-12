@@ -1,0 +1,6 @@
+sci-libs/gdal ~amd64
+sci-libs/geos ~amd64
+dev-db/postgis ~amd64
+dev-libs/json-c ~amd64
+dev-db/postgresql-base ~amd64
+dev-db/postgresql-server ~amd64

@@ -1,0 +1,66 @@
+---
+# file: roles/common/tasks/main.yml
+
+- name: Ensure EPEL Yum repo is installed
+  shell:
+    rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    creates=/etc/yum.repos.d/epel.repo
+  sudo: yes
+  when: ansible_distribution == 'CentOS'
+
+# set language, based upon http://askubuntu.com/questions/20880/how-do-i-create-a-unicode-databases-in-postgresql-8-4
+- name: Fix locale for hashicorp/precise box
+  shell:
+    echo "export LANGUAGE=en_US.UTF-8" >> /etc/default/locale;
+    echo "export LANG=en_US.UTF-8" >> /etc/default/locale;
+    echo "export LC_ALL=en_US.UTF-8" >> /etc/default/locale;
+    dpkg-reconfigure locales && touch locale-changed;
+    chdir=/home/vagrant/
+    creates=/home/vagrant/locale-changed
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Set locale
+  shell:
+    localedef -i en_US -f UTF-8 en_US.UTF-8 && touch locale-changed;
+    chdir=/home/vagrant/
+    creates=/home/vagrant/locale-changed
+  sudo: yes
+  when: ansible_distribution == 'Gentoo'
+
+
+- name: Install Ansible deps
+  yum: name={{item}} state=latest
+  with_items:
+    - libselinux-python
+    - python-psycopg2
+  sudo: yes
+  when: ansible_distribution == 'CentOS'
+
+- name: Install Ansible deps, git and daemon
+  action: apt pkg={{item}} state=latest update_cache=true
+  with_items:
+    - python-pycurl
+    - python-psycopg2
+    - python-software-properties
+    - make
+    - git
+    - daemon
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
+
+
+- name: Create ssh directories and ssh known hosts
+  shell:
+    mkdir -p /home/{{ansible_ssh_user}}/.ssh &&
+    touch /home/{{ansible_ssh_user}}/.ssh/known_hosts
+    creates=/home/{{ansible_ssh_user}}/.ssh/known_hosts
+
+- name: Add known hosts to known_hosts file
+  lineinfile: dest=/home/{{ansible_ssh_user}}/.ssh/known_hosts regexp=^{{item.host}} line="{{item.line}}"
+  with_items:
+   - { "host": "github.com", "line": "github.com,207.97.227.239 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" }
+
+- name: Create data and data log  directories
+  file: path=/data/log state=directory owner=root group=root
+  sudo: yes

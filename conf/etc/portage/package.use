@@ -1,0 +1,4 @@
+>=sys-libs/zlib-1.2.8-r1 minizip
+>=app-text/ghostscript-gpl-9.10-r2 cups
+>=x11-libs/cairo-1.12.16 X
+>=dev-vcs/git-1.8.3.2 curl

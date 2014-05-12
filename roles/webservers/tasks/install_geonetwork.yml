@@ -1,0 +1,26 @@
+---
+##############################################
+# Geonetwork - geonetwork-2.10.3-war
+# ############################################
+
+# Database creation in dbservers
+
+- name: Ensure geonetwork is downloaded
+  get_url:
+    url=http://downloads.sourceforge.net/project/geonetwork/GeoNetwork_opensource/v2.10.3/geonetwork.war
+    dest=/opt/jetty-hightide/webapps/geonetwork.war
+    mode=0544
+  sudo: yes
+
+- name: Extract geonetwork
+  shell:
+    mkdir -p geonetwork && cd geonetwork && sudo jar xvf ../geonetwork.war
+    chdir=/opt/jetty-hightide/webapps/
+    creates=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/config.xml
+  sudo: yes
+
+- name: Configure geonetwork to use PostgreSQL DB
+  template: src=geonetwork-config.xml.j2 dest=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/config.xml
+  notify:
+    - start jetty-hightide
+  sudo: yes

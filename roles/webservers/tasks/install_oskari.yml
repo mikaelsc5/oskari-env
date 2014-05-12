@@ -1,0 +1,75 @@
+---
+# http://www.tomaz.me/2013/10/14/solution-for-ansible-git-module-getting-stuck-on-clone.html
+
+- name: Clone oskari-server from github
+  git: repo=git://github.com/nls-oskari/oskari-server.git
+       dest=/home/{{ansible_ssh_user}}/oskari-server
+       version=develop
+
+- name: Clone oskari from github
+  git: repo=git://github.com/nls-oskari/oskari.git
+       dest=/home/{{ansible_ssh_user}}/Oskari
+       version=develop
+
+- name: Install npm packages
+  npm: path=/home/{{ansible_ssh_user}}/Oskari/tools
+
+- name: Link node modules .bin to allow global access
+  shell:
+    cd /usr/local/bin &&
+    ln -s /home/{{ ansible_ssh_user }}/Oskari/tools/node_modules/.bin/* .
+    creates=/usr/local/bin/grunt
+  sudo: yes
+
+- name: set postgres db properties
+  copy: src=conf/postgres-db.properties dest=/home/vagrant/oskari-server/content-resources/src/main/resources/db.properties
+
+- name: set transport properties
+  copy: src=conf/transport-config.properties dest=/home/vagrant/oskari-server/transport/src/main/resources/fi/nls/oskari/transport/config.properties
+
+- name: add local WMS layer
+  copy: src=conf/local-WMS-layer.sql dest=/home/vagrant/oskari-server/content-resources/src/main/resources/sql/PostgreSQL/
+
+- name: replace postgres-myplaces2 view as default
+  copy: src=conf/postgres-myplaces2-view.json dest=/home/vagrant/oskari-server/content-resources/src/main/resources/json/views/
+
+- name: add postgres-myplaces-wfs2 setup with local-WMS-layer and only default postgres-myplaces2 view
+  copy: src=conf/postgres-myplaces-wfs2.json dest=/home/vagrant/oskari-server/content-resources/src/main/resources/setup/
+
+- name: add omat_paikat to servlet-map web.xml
+  copy: src=conf/web.xml dest=/home/vagrant/oskari-server/webapp-map/env/jetty-jaas/WEB-INF/web.xml
+
+- name: add custom filter base properties
+  copy: src=conf/filter-base.properties dest=/home/vagrant/oskari-server/servlet-map/filter/
+
+- name: build and deploy oskari
+  shell:
+    cd /home/{{ansible_ssh_user}}/oskari-server &&
+    mvn clean install -Pjetty-jaas &&
+    sudo cp webapp-map/target/oskari-map.war /opt/jetty-hightide/webapps/
+    creates=/opt/jetty-hightide/webapps/oskari-map.war
+
+- name: create db
+  shell:
+    mvn clean install exec:java -Doskari.dropdb=true -Doskari.setup=postgres-myplaces-wfs2 && touch /home/{{ansible_ssh_user}}/postgres-db-create
+    chdir=/home/{{ansible_ssh_user}}/oskari-server/content-resources
+    creates=/home/{{ansible_ssh_user}}/postgres-db-create
+
+- name: add myplaces triggers
+  shell:
+    /usr/bin/psql -d {{ db_name }} -f trigger-myplaces.sql && touch myplaces-trigger-create
+    chdir=/home/{{ansible_ssh_user}}/oskari-server/content-resources/src/main/resources/sql/PostgreSQL/
+    creates=/home/{{ansible_ssh_user}}/myplaces-trigger-create
+
+- name: build and deploy OskariMarkFactory
+  shell:
+    cd /home/{{ansible_ssh_user}}/oskari-server/geoserver-ext/OskariMarkFactory &&
+    mvn clean install
+    creates=/home/{{ansible_ssh_user}}/oskari-server/geoserver-ext/OskariMarkFactory/target/OskariMarkFactory-1.0.jar
+
+- name: build and deploy transport
+  shell:
+    cd /home/{{ansible_ssh_user}}/oskari-server/transport &&
+    mvn clean install -DskipTests &&
+    sudo cp target/transport-0.0.1.war /opt/jetty-hightide/webapps/transport.war
+    creates=/opt/jetty-hightide/webapps/transport.war

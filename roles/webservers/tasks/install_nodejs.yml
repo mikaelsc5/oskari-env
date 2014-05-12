@@ -1,0 +1,39 @@
+---
+
+# nodejs is available in centos epel repo
+# nodejs is released frequently and ubuntu repo usually has an out-dated version
+
+- name: Add Nodejs repo key
+  apt_key: url=http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0xB9316A7BC7917B12 state=present
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Add Nodejs repo
+  apt_repository: repo='deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main'
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
+
+
+- name: install nodejs
+  yum: name=nodejs state=latest
+  sudo: yes
+  when: ansible_distribution == 'CentOS'
+
+- name: install nodejs
+  apt: name=nodejs state=latest
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: install nodejs
+  portage: package={{item}} state=present sync=yes update=yes
+  with_items:
+    - net-libs/nodejs
+  sudo: yes
+  when: ansible_distribution == 'Gentoo'
+
+
+- name: install npm
+  yum: name=npm state=latest
+  sudo: yes
+  when: ansible_distribution == 'CentOS'
+# npm is included in the nodejs installation in the nodejs repo

@@ -1,0 +1,36 @@
+---
+# file: roles/webservers/handlers/main.yml
+- name: restart nginx
+  service: name=nginx state=restarted enabled=yes runlevel=default
+  sudo: yes
+
+- name: restart postgresql-9.3
+  service: name=postgresql-9.3 state=restarted enabled=yes runlevel=default
+  sudo: yes
+  when: ansible_distribution == 'Gentoo' 
+
+
+- name: restart redis-server
+  service: name=redis-server state=restarted enabled=yes runlevel=default
+  sudo: yes
+
+- name: start redis-server
+  service: name=redis-server state=started enabled=yes runlevel=default
+  sudo: yes
+
+- name: restart redis
+  service: name=redis state=restarted enabled=yes runlevel=default
+  sudo: yes
+
+- name: start redis
+  service: name=redis state=started enabled=yes runlevel=default
+  sudo: yes
+
+
+- name: start jetty
+  service: name=jetty state=started enabled=yes runlevel=default
+  sudo: yes
+
+- name: start jetty-hightide
+  service: name=jetty-hightide state=started enabled=yes runlevel=default
+  sudo: yes

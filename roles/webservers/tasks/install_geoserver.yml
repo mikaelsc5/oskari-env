@@ -1,0 +1,28 @@
+---
+##############################################
+# Geoserver - geoserver-2.4.2-war
+# https://github.com/nls-oskari/oskari-server/blob/master/docs/EnablingMyPlacesWithPostgis.md
+# https://github.com/nls-oskari/oskari-server/blob/develop/docs/BasicInstall-OskariServletPostgres.md
+# https://github.com/nls-oskari/oskari-server/blob/master/docs/SettingUpTransportWFS.md
+# ############################################
+
+- file: path=/data/geoserver state=directory
+  sudo: yes
+
+- unarchive: src=data-geodata.tar.gz dest=/data/
+  sudo: yes
+
+- file: path=/data/geoserver state=directory owner=root group=root recurse=yes
+  sudo: yes
+
+- file: path=/opt/jetty/webapps/geoserver state=directory owner=root group=root
+  sudo: yes
+
+- name: Extract geoserver and build OskariMarkFactory as lib
+  shell:
+    cd /opt/jetty/webapps/geoserver/ &&
+    sudo jar xvf /vagrant/provisioning/roles/webservers/files/geoserver.war &&
+    cd ~/oskari-server/geoserver-ext/OskariMarkFactory &&
+    mvn install &&
+    sudo cp target/OskariMarkFactory-1.0.jar /opt/jetty/webapps/geoserver/WEB-INF/lib/
+    creates=/opt/jetty/webapps/geoserver/WEB-INF/lib/OskariMarkFactory-1.0.jar

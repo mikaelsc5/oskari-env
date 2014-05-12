@@ -1,0 +1,2 @@
+# nginx settings
+connections : 1024

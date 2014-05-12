@@ -1,0 +1,6 @@
+---
+# file: roles/dbservers/tasks/main.yml
+# modified based on https://github.com/radar/ansible-rails-app/blob/master/roles/database/tasks/postgresql.yml
+# and # https://github.com/Kami/ansible-postgresql/blob/master/roles/postgresql/tasks/postgresql.yml
+
+- include: install_postgresql.yml
