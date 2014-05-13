@@ -14,7 +14,7 @@
 
 - name: Extract geonetwork
   shell:
-    mkdir -p geonetwork && cd geonetwork && sudo jar xvf ../geonetwork.war
+    mkdir -p geonetwork && cd geonetwork && sudo jar xvf ../geonetwork.war && sudo rm ../geonetwork.war
     chdir=/opt/jetty-hightide/webapps/
     creates=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/config.xml
   sudo: yes
