@@ -18,9 +18,14 @@
   when: ansible_distribution == 'Ubuntu'
 
 - name: Add PostgreSQL repo
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main'
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
+
+- name: Add PostgreSQL repo
   apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
   sudo: yes
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'precise'
 
 - name: Unlock PostgreSQL, Postgis & deps unstable packages
   copy: src=conf/etc/portage/ dest=/etc/portage/ owner=root group=root mode=0644

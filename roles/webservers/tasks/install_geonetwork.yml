@@ -8,13 +8,13 @@
 - name: Ensure geonetwork is downloaded
   get_url:
     url=http://downloads.sourceforge.net/project/geonetwork/GeoNetwork_opensource/v2.10.3/geonetwork.war
-    dest=/opt/jetty-hightide/webapps/geonetwork.war
+    dest=/home/{{ansible_ssh_user}}/geonetwork.war
     mode=0544
   sudo: yes
 
 - name: Extract geonetwork
   shell:
-    mkdir -p geonetwork && cd geonetwork && sudo jar xvf ../geonetwork.war && sudo rm ../geonetwork.war
+    mkdir -p geonetwork && cd geonetwork && sudo jar xvf /home/{{ansible_ssh_user}}/geonetwork.war
     chdir=/opt/jetty-hightide/webapps/
     creates=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/config.xml
   sudo: yes

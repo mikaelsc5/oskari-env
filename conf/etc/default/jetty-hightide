@@ -3,10 +3,10 @@ JETTY_HOME=/opt/jetty-hightide
 JETTY_LOGS=/data/log/jetty-hightide
 JETTY_PID=/var/run/jetty-hightide.pid
 
-JAVA_OPTIONS="${JAVA_OPTIONS} -server -Xms256m -Xmx512m"
+JAVA_OPTIONS="${JAVA_OPTIONS} -server -Xms512m -Xmx768m"
 JAVA_OPTIONS="${JAVA_OPTIONS} -XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
 
-JAVA_OPTIONS="${JAVA_OPTIONS} -XX:+CMSClassUnloadingEnabled -XX:PermSize=256m -XX:MaxPermSize=384m"
+JAVA_OPTIONS="${JAVA_OPTIONS} -XX:+CMSClassUnloadingEnabled -XX:PermSize=512m -XX:MaxPermSize=768m"
 JAVA_OPTIONS="${JAVA_OPTIONS} -XX:+HeapDumpOnOutOfMemoryError"
 
 JAVA_OPTIONS="${JAVA_OPTIONS} -Dfi.paikkatietoikkuna.imaging.config=/etc/default/oskari-printout-backend.properties"

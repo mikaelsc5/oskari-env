@@ -74,6 +74,7 @@
     chown -R root:root /opt/jetty-hightide &&
     rm -rf /opt/jetty-hightide/webapps/test* &&
     rm -rf /opt/jetty-hightide/webapps/async* &&
+    rm -rf /opt/jetty-hightide/webapps/*.war &&
     rm -rf /opt/jetty-hightide/contexts/test*
     creates=/opt/jetty-hightide
   sudo: yes
@@ -82,12 +83,16 @@
   copy: src=conf/etc/default/jetty-hightide dest=/etc/default/ owner=root group=root mode=0755
   sudo: yes
 
-- name: Copy jetty environment settings
+- name: Copy jetty-hightide environment settings
   copy: src=conf/opt/jetty/etc/jetty-hightide.xml dest=/opt/jetty-hightide/etc/jetty.xml owner=root group=root mode=0644
+  notify:
+    - restart jetty-hightide
   sudo: yes
 
 - name: Copy jetty-jaas environment settings
   copy: src=conf/opt/jetty/etc/jetty-jaas.xml dest=/opt/jetty-hightide/etc/ owner=root group=root mode=0644
+  notify:
+    - restart jetty-hightide
   sudo: yes
 
 - name: Comment out contexts
@@ -112,8 +117,22 @@
   copy: src=jdbc/ dest=/opt/jetty-hightide/lib/jdbc/ owner=root group=root mode=0644
   sudo: yes
 
-- name: Copy oskari-ext.properties and jndi-login.conf
-  copy: src=conf/opt/jetty/resources/ dest=/opt/jetty-hightide/resources/ owner=root group=root mode=0644
+- name: Copy elf-jndi-login.conf
+  copy: src=elf-jndi-login.conf dest=/opt/jetty-hightide/resources/ owner=root group=root mode=0644
+  notify:
+    - restart jetty-hightide
+  sudo: yes
+
+- name: Copy transport configs
+  copy: src=transport-ext.properties dest=/opt/jetty-hightide/resources/ owner=root group=root mode=0644
+  notify:
+    - restart jetty-hightide
+  sudo: yes
+
+- name: Configure oskari-ext.properties to use given oskari-version
+  template: src=oskari-ext.properties.j2 dest=/opt/jetty-hightide/resources/oskari-ext.properties
+  notify:
+    - restart jetty-hightide
   sudo: yes
 
 - name: modify jetty name, fully quoted as it contains special characters
@@ -131,5 +150,5 @@
     chmod a+x /etc/init.d/jetty-hightide
     creates=/etc/init.d/jetty-hightide
   notify:
-    - start jetty-hightide
+    - restart jetty-hightide
   sudo: yes

@@ -34,3 +34,7 @@
 - name: start jetty-hightide
   service: name=jetty-hightide state=started enabled=yes runlevel=default
   sudo: yes
+
+- name: restart jetty-hightide
+  service: name=jetty-hightide state=restarted enabled=yes runlevel=default
+  sudo: yes

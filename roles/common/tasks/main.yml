@@ -9,16 +9,16 @@
   when: ansible_distribution == 'CentOS'
 
 # set language, based upon http://askubuntu.com/questions/20880/how-do-i-create-a-unicode-databases-in-postgresql-8-4
-- name: Fix locale for hashicorp/precise box
-  shell:
-    echo "export LANGUAGE=en_US.UTF-8" >> /etc/default/locale;
-    echo "export LANG=en_US.UTF-8" >> /etc/default/locale;
-    echo "export LC_ALL=en_US.UTF-8" >> /etc/default/locale;
-    dpkg-reconfigure locales && touch locale-changed;
-    chdir=/home/vagrant/
-    creates=/home/vagrant/locale-changed
-  sudo: yes
-  when: ansible_distribution == 'Ubuntu'
+#- name: Fix locale for hashicorp/precise box
+#  shell:
+#    echo "export LANGUAGE=en_US.UTF-8" >> /etc/default/locale;
+#    echo "export LANG=en_US.UTF-8" >> /etc/default/locale;
+#    echo "export LC_ALL=en_US.UTF-8" >> /etc/default/locale;
+#    dpkg-reconfigure locales && touch locale-changed;
+#    chdir=/home/vagrant/
+#    creates=/home/vagrant/locale-changed
+#  sudo: yes
+#  when: ansible_distribution == 'Ubuntu'
 
 - name: Set locale
   shell:

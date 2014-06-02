@@ -9,7 +9,7 @@
 - file: path=/data/geoserver state=directory
   sudo: yes
 
-- unarchive: src=data-geodata.tar.gz dest=/data/
+- unarchive: src=elf-data-geodata.tar.gz dest=/data/
   sudo: yes
 
 - file: path=/data/geoserver state=directory owner=root group=root recurse=yes
