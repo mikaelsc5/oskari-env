@@ -68,9 +68,3 @@
     chown -R root:root /usr/lib/jvm/jdk1.7.0_55;
   sudo: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
-
-- name: Configure java and set permissions
-  shell:
-    java-config --set-system-vm oracle-jdk-bin-1.7
-  sudo: yes
-  when: ansible_distribution == 'CentOS'
