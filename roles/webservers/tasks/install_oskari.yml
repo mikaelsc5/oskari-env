@@ -54,7 +54,6 @@
     grunt release:{{ oskari_version }}:{{ oskari_minifierAppSetups }}
     chdir={{oskari_path}}/Oskari/tools
   when: oskari_development == false
-  sudo: yes
 
 - name: set postgres db properties
   copy: src=conf/postgres-db.properties dest={{oskari_path}}/oskari-server/content-resources/src/main/resources/db.properties
