@@ -1,6 +1,15 @@
 ---
 # http://www.tomaz.me/2013/10/14/solution-for-ansible-git-module-getting-stuck-on-clone.html
 
+- name: Install graphicsmagick
+  yum: name=GraphicsMagick state=latest
+  sudo: yes
+  when: ansible_distribution == 'CentOS'
+
+- name: Install graphicsmagick
+  apt: pkg=graphicsmagick state=latest install_recommends=yes
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
 
 - name: install graphicsmagick
   portage: package={{item}} state=present sync=yes update=yes
@@ -16,11 +25,6 @@
     - media-gfx/graphicsmagick
   sudo: yes
   when: ansible_distribution == 'Gentoo'
-
-- name: Install graphicsmagick
-  apt: pkg=graphicsmagick state=latest install_recommends=yes
-  sudo: yes
-  when: ansible_distribution == 'Ubuntu'
 
 
 - name: Clone oskari-server from github
