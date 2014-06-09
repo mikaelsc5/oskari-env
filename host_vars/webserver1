@@ -15,7 +15,7 @@ oskari_minifierAppSetups: "../applications/elf/elf_guest/minifierAppSetup.json,.
 
 oskari_locales: "fi_FI,sv_SE,en_US"
 
-oskari_db_setup: "app-elf"
+oskari_db_setup: "app-asdi"
 oskari_mvn_profile: "elf-jetty-jaas"
 
 # File path for Oskari where to install and configure nginx root
