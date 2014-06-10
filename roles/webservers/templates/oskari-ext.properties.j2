@@ -54,26 +54,34 @@ search.channel.ELFGEOLOCATOR_CHANNEL.className=fi.nls.oskari.search.channel.ELFG
 search.channel.ELFGEOLOCATOR_CHANNEL.service.url=http://54.247.101.37/elf/GeolocatorService
 
 # comma-separated list of search channel ids that should be registered for search service
-search.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+#search.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+search.channels=ELFGEOLOCATOR_CHANNEL,METADATA_CATALOGUE_CHANNEL
+
 
 # comma-separated list of id for search channel that will be used (defaulted to) if none are explicitly configured
-search.channels.default=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+#search.channels.default=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+search.channels.default=ELFGEOLOCATOR_CHANNEL,METADATA_CATALOGUE_CHANNEL
+
 
 # comma-separated list of search channel ids used by GetSearchResult
-actionhandler.GetSearchResult.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+#actionhandler.GetSearchResult.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+actionhandler.GetSearchResult.channels=ELFGEOLOCATOR_CHANNEL
+
 
 
 search.channel.METADATA_CATALOGUE_CHANNEL.className=fi.nls.oskari.search.channel.MetadataCatalogueChannelSearchService
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.fi=http://localhost/geonetwork/srv/fi/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.sv=http://localhost/geonetwork/srv/sv/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.en=http://localhost/geonetwork/srv/en/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.fi=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=fi&metadataresourceuuid=
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.sv=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=sv&metadataresourceuuid=
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.en=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=en&metadataresourceuuid=
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.fi=/geonetwork/srv/fin/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.sv=/geonetwork/srv/swe/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.en=/geonetwork/srv/eng/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.fi=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.sv=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.en=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
+
 
 # Metadata catalogue channel config
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.server=http://localhost
-search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/en/csw
+#search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/en/csw
+search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/eng/csw
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.queryParams=SERVICE=CSW&VERSION=2.0.2&request=GetDomain&PropertyName=
 # List of fields to show in advanced form (values retrieved by GetDomain requests)
 search.channel.METADATA_CATALOGUE_CHANNEL.fields=type,serviceType,Title,OrganisationName,Subject,TopicCategory,Language,ResourceLanguage
@@ -150,3 +158,5 @@ myplaces.xmlns.prefix=oskari
 
 # Supported locales, comma separated and default first
 oskari.locales={{ oskari_locales }}
+
+view.published.usage.unrestrictedDomains = 54.216.109.137, locationframework.eu, localhost

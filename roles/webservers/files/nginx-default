@@ -4,8 +4,9 @@ map $http_upgrade $connection_upgrade {
 }
 
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server ipv6only=on;
+#	listen 80 default_server;
+#	listen [::]:80 default_server ipv6only=on;
+	listen 80;
 
 	root /home/vagrant/;
 	index index.html index.htm;
@@ -19,6 +20,20 @@ server {
 #	client_max_body_size 800M; # avoid HTTP 413 for large image uploads
 
 	location / {
+
+               if ($query_string ~* "action_route=GetArticlesByTag&tags=karttaikkuna%2Cpikaohje") {
+                  rewrite ^ /Oskari/QuickStartGuide-fi.json last;
+                }
+                if ($query_string ~* "action_route=GetArticlesByTag&tags=kartf%C3%B6nstret%2Csnappguide") {
+                  rewrite ^ /Oskari/QuickStartGuide-sv.json last;
+                }
+                if ($query_string ~* "action_route=GetArticlesByTag&tags=map\+window%2Cuser\+guide") {
+
+                  rewrite ^ /Oskari/QuickStartGuide-en.json last;
+                }
+
+	
+	
 		proxy_pass http://localhost:8082/oskari-map/;
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-Host $host;
