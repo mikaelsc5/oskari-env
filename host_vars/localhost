@@ -1,5 +1,5 @@
 ---
-# file: host_vars/webserver1
+# file: host_vars/localhost
 # individual setting goes here
 db_name: "oskaridb"
 db_username: "vagrant"
@@ -22,3 +22,6 @@ oskari_mvn_profile: "elf-jetty-jaas"
 # Note, using /vagrant exposes the shared folder from the host filesystem
 # and using /home/{{ansible_ssh_user}} is recommended
 oskari_path: "/home/{{ansible_ssh_user}}"
+
+# /vagrant/provisioning
+ansible_provisioning_path: "/home/{{ansible_ssh_user}}/.ansible/pull/localhost.localdomain"
