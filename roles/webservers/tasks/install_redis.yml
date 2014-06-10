@@ -15,9 +15,9 @@
     sudo chmod 0755 /usr/sbin/redis-*;
     sudo chown root:root /usr/sbin/redis-*;
     sudo mkdir -p /etc/redis;
-    sudo cp {{ ansible_provisioning_path | /vagrant/provisioning }}/conf/etc/redis/redis.conf /etc/redis/;
+    sudo cp {{ ansible_provisioning_path | default("/vagrant/provisioning") }}/conf/etc/redis/redis.conf /etc/redis/;
     sudo mkdir -p /data/log/redis;
-    sudo cp {{ ansible_provisioning_path | /vagrant/provisioning }}/conf/etc/init.d/redis-server.sh /etc/init.d/redis-server;
+    sudo cp {{ ansible_provisioning_path | default("/vagrant/provisioning") }}/conf/etc/init.d/redis-server.sh /etc/init.d/redis-server;
     sudo chmod a+x /etc/init.d/redis-server;
     creates=/etc/redis
   notify:

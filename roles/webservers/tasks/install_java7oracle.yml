@@ -15,8 +15,8 @@
 - name: Ensure Oracle JDK is downloaded
   shell:
     'wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u55-b13/jdk-7u55-linux-x64.tar.gz
-    chdir={{ ansible_provisioning_path | /vagrant/provisioning }}/roles/webservers/files/
-    creates={{ ansible_provisioning_path | /vagrant/provisioning }}/roles/webservers/files/jdk-7u55-linux-x64.tar.gz'
+    chdir={{ ansible_provisioning_path | default("/vagrant/provisioning") }}/roles/webservers/files/
+    creates={{ ansible_provisioning_path | default("/vagrant/provisioning") }}/roles/webservers/files/jdk-7u55-linux-x64.tar.gz'
   sudo: yes
 
 
