@@ -1,27 +1,3 @@
 ---
 # file: host_vars/localhost
 # individual setting goes here
-db_name: "oskaridb"
-db_username: "vagrant"
-db_password: "secret"
-
-# geonetwork database params
-db_geonetwork_name: "geonetwork_2_10"
-
-# oskari distribution params
-oskari_development: false
-oskari_version: 1.21
-oskari_minifierAppSetups: "../applications/elf/elf_guest/minifierAppSetup.json,../applications/elf/elf_published/minifierAppSetup.json"
-
-oskari_locales: "fi_FI,sv_SE,en_US"
-
-oskari_db_setup: "app-asdi"
-oskari_mvn_profile: "elf-jetty-jaas"
-
-# File path for Oskari where to install and configure nginx root
-# Note, using /vagrant exposes the shared folder from the host filesystem
-# and using /home/{{ansible_ssh_user}} is recommended
-oskari_path: "/home/{{ansible_ssh_user}}"
-
-# /vagrant/provisioning
-ansible_provisioning_path: "/home/{{ansible_ssh_user}}/.ansible/pull/localhost.localdomain"
