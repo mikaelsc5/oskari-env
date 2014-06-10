@@ -10,7 +10,7 @@ db_geonetwork_name: "geonetwork_2_10"
 # oskari distribution params
 oskari_development: false
 oskari_version: 1.21
-oskari_minifierAppSetups: "../applications/elf/elf_guest/minifierAppSetup.json,../applications/elf/elf_published/minifierAppSetup.json"
+oskari_minifierAppSetups: "../applications/asdi/asdi_guest/minifierAppSetup.json"
 
 oskari_locales: "fi_FI,sv_SE,en_US"
 
