@@ -12,7 +12,7 @@ oskari_development: false
 oskari_version: 1.21
 oskari_minifierAppSetups: "../applications/asdi/asdi_guest/minifierAppSetup.json"
 
-oskari_locales: "fi_FI,sv_SE,en_US"
+oskari_locales: "en_US,fi_FI,sv_SE"
 
 oskari_db_setup: "app-asdi"
 oskari_mvn_profile: "elf-jetty-jaas"

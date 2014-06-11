@@ -149,41 +149,41 @@
   when: ansible_distribution == 'Gentoo' 
 
 
-- name: create the postgresql user for application
-  postgresql_user:
-    name={{ db_username }}
-    password={{ db_password }}
-    role_attr_flags=SUPERUSER,CREATEROLE,CREATEDB,INHERIT,LOGIN;
-  sudo: yes
-  sudo_user: postgres
+# - name: create the postgresql user for application
+#   postgresql_user:
+#     name={{ db_username }}
+#     password={{ db_password }}
+#     role_attr_flags=SUPERUSER,CREATEROLE,CREATEDB,INHERIT,LOGIN;
+#   sudo: yes
+#   sudo_user: postgres
 
-- name: create the postgresql database for application
-  postgresql_db:
-    name={{ db_name }}
-    owner={{ db_username }}
-    encoding="UTF8"
-    state=present
-  sudo: yes
-  sudo_user: postgres
+# - name: create the postgresql database for application
+#   postgresql_db:
+#     name={{ db_name }}
+#     owner={{ db_username }}
+#     encoding="UTF8"
+#     state=present
+#   sudo: yes
+#   sudo_user: postgres
 
-- name: create postgis EXTENSION
-  shell:
-    /usr/bin/psql -d {{ db_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch postgis-extension-create
-    chdir=/home/vagrant/
-    creates=/home/vagrant/postgis-extension-create
+# - name: create postgis EXTENSION
+#   shell:
+#     /usr/bin/psql -d {{ db_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch postgis-extension-create
+#     chdir=/home/vagrant/
+#     creates=/home/vagrant/postgis-extension-create
 
 
-- name: create the postgresql database for geonetwork
-  postgresql_db:
-    name={{ db_geonetwork_name }}
-    owner={{ db_username }}
-    encoding="UTF8"
-    state=present
-  sudo: yes
-  sudo_user: postgres
+# - name: create the postgresql database for geonetwork
+#   postgresql_db:
+#     name={{ db_geonetwork_name }}
+#     owner={{ db_username }}
+#     encoding="UTF8"
+#     state=present
+#   sudo: yes
+#   sudo_user: postgres
 
-- name: create geonetwork postgis EXTENSION
-  shell:
-    /usr/bin/psql -d {{ db_geonetwork_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch geonetwork-postgis-extension-create
-    chdir=/home/vagrant/
-    creates=/home/vagrant/geonetwork-postgis-extension-create
+# - name: create geonetwork postgis EXTENSION
+#   shell:
+#     /usr/bin/psql -d {{ db_geonetwork_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch geonetwork-postgis-extension-create
+#     chdir=/home/vagrant/
+#     creates=/home/vagrant/geonetwork-postgis-extension-create
