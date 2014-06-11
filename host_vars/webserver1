@@ -13,7 +13,7 @@ oskari_development: false
 oskari_version: 1.21
 oskari_minifierAppSetups: "../applications/elf/elf_guest/minifierAppSetup.json,../applications/elf/elf_published/minifierAppSetup.json"
 
-oskari_locales: "fi_FI,sv_SE,en_US"
+oskari_locales: "en_US,fi_FI,sv_SE"
 
 oskari_db_setup: "app-elf"
 oskari_mvn_profile: "elf-jetty-jaas"
