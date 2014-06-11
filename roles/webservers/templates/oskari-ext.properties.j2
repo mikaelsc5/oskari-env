@@ -8,7 +8,8 @@ oskari.client.version=dist/{{ oskari_version }}
 oskari.init.db=false
 
 # Logger implementation - SystemLogger logs into System.out/err, replace with logging implementation of your choice
-oskari.logger=fi.nls.oskari.log.SystemLogger
+#oskari.logger=fi.nls.oskari.log.SystemLogger
+oskari.logger=fi.nls.oskari.log.NullLogger
 
 # true all ssl certs/hosts for debugging! configure certs on the server for production
 oskari.trustAllCerts=true
