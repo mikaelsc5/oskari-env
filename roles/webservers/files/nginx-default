@@ -77,6 +77,8 @@ server {
 		proxy_set_header Host $http_host;
 	}
 
+    rewrite ^/geonetwork/srv/(.*)/iso19139.xml http://$http_host/geonetwork/srv/eng/csw?service=CSW&Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=$arg_uuid redirect;
+
 	location ^~ /geonetwork {
 		proxy_pass http://localhost:8082;
 		proxy_set_header X-Real-IP $remote_addr;
