@@ -47,31 +47,35 @@ oskari.user.role.admin = Admin
 #   className indicates the implementation class
 #   other properties are passed on to the implementation class.
 
+# GEONAMES search channel setting 
+search.channel.GEONAMES_CHANNEL.className=fi.nls.oskari.search.channel.GeoNamesSearchChannel 
+search.channel.GEONAMES_CHANNEL.service.url=http://api.geonames.org/searchJSON 
+search.channel.GEONAMES_CHANNEL.username=arcticsdi 
+
 # OpenStreetMap search channel settings
 search.channel.OPENSTREETMAP_CHANNEL.className=fi.nls.oskari.search.OpenStreetMapSearchChannel
 search.channel.OPENSTREETMAP_CHANNEL.service.url=http://nominatim.openstreetmap.org/search
 
 # comma-separated list of search channel ids that should be registered for search service
-search.channels=OPENSTREETMAP_CHANNEL
+search.channels=GEONAMES_CHANNEL
 
 # comma-separated list of id for search channel that will be used (defaulted to) if none are explicitly configured
-search.channels.default=OPENSTREETMAP_CHANNEL
+search.channels.default=GEONAMES_CHANNEL
 
 # comma-separated list of search channel ids used by GetSearchResult
-actionhandler.GetSearchResult.channels=OPENSTREETMAP_CHANNEL
-
+actionhandler.GetSearchResult.channels=GEONAMES_CHANNEL
 
 search.channel.METADATA_CATALOGUE_CHANNEL.className=fi.nls.oskari.search.channel.MetadataCatalogueChannelSearchService
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.fi=http://localhost/geonetwork/srv/fi/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.sv=http://localhost/geonetwork/srv/sv/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.en=http://localhost/geonetwork/srv/en/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.fi=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=fi&metadataresourceuuid=
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.sv=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=sv&metadataresourceuuid=
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.en=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=en&metadataresourceuuid=
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.fi=/geonetwork/srv/fin/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.sv=/geonetwork/srv/swe/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.en=/geonetwork/srv/eng/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.fi=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.sv=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.en=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
 
 # Metadata catalogue channel config
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.server=http://localhost
-search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/en/csw
+search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/eng/csw
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.queryParams=SERVICE=CSW&VERSION=2.0.2&request=GetDomain&PropertyName=
 # List of fields to show in advanced form (values retrieved by GetDomain requests)
 search.channel.METADATA_CATALOGUE_CHANNEL.fields=type,serviceType,Title,OrganisationName,Subject,TopicCategory,Language,ResourceLanguage
@@ -93,6 +97,7 @@ search.channel.METADATA_CATALOGUE_CHANNEL.field.serviceType.filterOp=COMP_EQUAL
 # must match means that this will be a top level filter element added as AND-operations (where as most other fields are added as OR)
 search.channel.METADATA_CATALOGUE_CHANNEL.field.Language.mustMatch=true
 search.channel.METADATA_CATALOGUE_CHANNEL.field.ResourceLanguage.mustMatch=true
+
 
 # How many threads are created into a wfs executor thread pool, defaults to 5
 #wfsexecutorservice.threadcount=15
