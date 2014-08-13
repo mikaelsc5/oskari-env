@@ -64,9 +64,10 @@
 - name: build and deploy oskari-map
   shell:
     mvn clean install -P{{ oskari_mvn_profile }} &&
-    sudo cp webapp-map/target/oskari-map.war /opt/jetty-hightide/webapps/
+    sudo cp webapp-map/target/oskari-map.war /opt/jetty-hightide/webapps/ &&
+    touch /home/{{ansible_ssh_user}}/oskari-deploy
     chdir={{oskari_path}}/oskari-server/
-    creates=/opt/jetty-hightide/webapps/oskari-map.war
+    creates=/home/{{ansible_ssh_user}}/oskari-deploy
 
 
 - name: create db
