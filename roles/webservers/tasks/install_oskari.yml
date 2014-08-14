@@ -51,6 +51,7 @@
 - name: build oskari frontend distribution files
   shell:
     rm -rf ../dist/{{ oskari_version }};
+    export PATH=$PATH:/usr/local/bin;
     grunt release:{{ oskari_version }}:{{ oskari_minifierAppSetups }}
     chdir={{oskari_path}}/Oskari/tools
   when: oskari_development == false

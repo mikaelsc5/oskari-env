@@ -47,7 +47,7 @@ oskari.user.role.admin = Admin
 #   className indicates the implementation class
 #   other properties are passed on to the implementation class.
 
-# GEONAMES search channel setting 
+# GEONAMES search channel setting
 search.channel.GEONAMES_CHANNEL.className=fi.nls.oskari.search.channel.GeoNamesSearchChannel
 search.channel.GEONAMES_CHANNEL.service.url=http://api.geonames.org/searchJSON
 search.channel.GEONAMES_CHANNEL.username=arcticsdi
@@ -57,7 +57,7 @@ search.channel.OPENSTREETMAP_CHANNEL.className=fi.nls.oskari.search.OpenStreetMa
 search.channel.OPENSTREETMAP_CHANNEL.service.url=http://nominatim.openstreetmap.org/search
 
 # comma-separated list of search channel ids that should be registered for search service
-search.channels=GEONAMES_CHANNEL
+search.channels=GEONAMES_CHANNEL, METADATA_CATALOGUE_CHANNEL
 
 # comma-separated list of id for search channel that will be used (defaulted to) if none are explicitly configured
 search.channels.default=GEONAMES_CHANNEL
