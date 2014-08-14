@@ -19,6 +19,15 @@
     creates=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/config.xml
   sudo: yes
 
+- unarchive: src=portti-xsl.tar.gz dest=/opt/jetty-hightide/webapps/geonetwork/xsl/
+  sudo: yes
+
+- name: copy config for portti
+  copy: src=config-portti.xml dest=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/config-portti.xml
+  notify:
+    - start jetty-hightide
+  sudo: yes
+
 - name: Configure geonetwork to use PostgreSQL DB
   template: src=geonetwork-config.xml.j2 dest=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/config.xml
   notify:

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<geonet>
+    <services package="org.fao.geonet">
+        <service name="metadata.show.portti">
+            <class name=".services.metadata.Show">
+                <param name="skipPopularity" value="y" />
+                <param name="addRefs" value="y" />
+                <param name="cache" value="y" />
+            </class>
+            <output sheet="portti-inspire.xsl">
+                <call name="currTab"  class=".guiservices.util.GetCurrentMDTab"/>
+                <call name="position" class=".guiservices.util.GetPositionMD"/>
+                <call name="relation" class =".guiservices.metadata.GetRelated"/>
+                <call name="sources"  class=".guiservices.util.Sources"/>
+                <call name="isoLang"  class=".guiservices.isolanguages.Get"/>
+                <call name="clear"  class=".services.metadata.ClearCachedShowMetadata"/>
+            </output>
+            <error id="operation-not-allowed" sheet="error-embedded.xsl">
+                <xml name="error" file="xml/metadata-show-error.xml" />
+            </error>
+        </service>
+        <service name="metadata.show.portti.jhs158">
+            <class name=".services.metadata.Show">
+                <param name="skipPopularity" value="y" />
+                <param name="addRefs" value="y" />
+                <param name="cache" value="y" />
+            </class>
+            <output sheet="portti-jhs158.xsl">
+                <call name="currTab"  class=".guiservices.util.GetCurrentMDTab"/>
+                <call name="position" class=".guiservices.util.GetPositionMD"/>
+                <call name="relation" class =".guiservices.metadata.GetRelated"/>
+                <call name="sources"  class=".guiservices.util.Sources"/>
+                <call name="isoLang"  class=".guiservices.isolanguages.Get"/>
+                <call name="clear"  class=".services.metadata.ClearCachedShowMetadata"/>
+            </output>
+            <error id="operation-not-allowed" sheet="error-embedded.xsl">
+                <xml name="error" file="xml/metadata-show-error.xml" />
+            </error>
+        </service>
+        <service name="metadata.show.portti.abstract">
+            <class name=".services.metadata.Show">
+                <param name="skipPopularity" value="y" />
+                <param name="addRefs" value="y" />
+                <param name="cache" value="y" />
+            </class>
+            <output sheet="portti-abstract.xsl">
+                <call name="currTab"  class=".guiservices.util.GetCurrentMDTab"/>
+                <call name="position" class=".guiservices.util.GetPositionMD"/>
+                <call name="relation" class =".guiservices.metadata.GetRelated"/>
+                <call name="sources"  class=".guiservices.util.Sources"/>
+                <call name="isoLang"  class=".guiservices.isolanguages.Get"/>
+                <call name="clear"  class=".services.metadata.ClearCachedShowMetadata"/>
+            </output>
+            <error id="operation-not-allowed" sheet="error-embedded.xsl">
+                <xml name="error" file="xml/metadata-show-error.xml" />
+            </error>
+        </service>
+    </services>
+</geonet>
