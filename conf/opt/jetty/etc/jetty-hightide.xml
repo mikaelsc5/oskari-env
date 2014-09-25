@@ -89,4 +89,8 @@
     <Set name="dumpAfterStart">false</Set>
     <Set name="dumpBeforeStop">false</Set>
 
+    <Call name="setAttribute">
+      <Arg>org.eclipse.jetty.server.Request.maxFormContentSize</Arg>
+      <Arg>500000</Arg>
+    </Call>
 </Configure>

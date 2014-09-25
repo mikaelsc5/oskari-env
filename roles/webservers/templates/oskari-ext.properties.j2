@@ -24,12 +24,17 @@ oskari.domain=http://localhost:8082/oskari-map
 # url path to call for ajax requests/action routes
 oskari.ajax.url.prefix=/?
 
-view.template.publish=3
-view.default.Guest=2
+# Used to configure a template view for publishing maps
+view.template.publish=2
+
+view.default.Guest=1
 view.default.Admin=1
 view.default.User=1
 view.default.roles=Admin, User, Guest
 oskari.user.role.admin=Admin
+
+# domains which are always allowed to load published maps
+view.published.usage.unrestrictedDomains = 159.162.102.133, localhost
 
 # UserService implementation - create own implementation to integrate into actual systems and provide feedback for missing interface methods.
 #oskari.user.service=fi.nls.oskari.user.StandaloneUserService // Not needed anymore when using JAAS
@@ -45,35 +50,35 @@ oskari.user.role.admin = Admin
 #   className indicates the implementation class
 #   other properties are passed on to the implementation class.
 
+# GEONAMES search channel setting
+search.channel.GEONAMES_CHANNEL.className=fi.nls.oskari.search.channel.GeoNamesSearchChannel
+search.channel.GEONAMES_CHANNEL.service.url=http://api.geonames.org/searchJSON
+search.channel.GEONAMES_CHANNEL.username=arcticsdi
+
 # OpenStreetMap search channel settings
 search.channel.OPENSTREETMAP_CHANNEL.className=fi.nls.oskari.search.OpenStreetMapSearchChannel
 search.channel.OPENSTREETMAP_CHANNEL.service.url=http://nominatim.openstreetmap.org/search
 
-#ELF GeoLocator channel settings  - only for ELF application, works also with Oskari
-search.channel.ELFGEOLOCATOR_CHANNEL.className=fi.nls.oskari.search.channel.ELFGeoLocatorSearchChannel
-search.channel.ELFGEOLOCATOR_CHANNEL.service.url=http://54.247.101.37/elf/GeolocatorService
-
 # comma-separated list of search channel ids that should be registered for search service
-search.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+search.channels=GEONAMES_CHANNEL, METADATA_CATALOGUE_CHANNEL
 
 # comma-separated list of id for search channel that will be used (defaulted to) if none are explicitly configured
-search.channels.default=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+search.channels.default=GEONAMES_CHANNEL
 
 # comma-separated list of search channel ids used by GetSearchResult
-actionhandler.GetSearchResult.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
-
+actionhandler.GetSearchResult.channels=GEONAMES_CHANNEL
 
 search.channel.METADATA_CATALOGUE_CHANNEL.className=fi.nls.oskari.search.channel.MetadataCatalogueChannelSearchService
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.fi=http://localhost/geonetwork/srv/fi/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.sv=http://localhost/geonetwork/srv/sv/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.image.url.en=http://localhost/geonetwork/srv/en/resources.get.uuid?access=public&
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.fi=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=fi&metadataresourceuuid=
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.sv=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=sv&metadataresourceuuid=
-search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.en=http://www.paikkatietohakemisto.fi/catalogue/ui/metadata.html?lang=en&metadataresourceuuid=
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.fi=/geonetwork/srv/fin/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.sv=/geonetwork/srv/swe/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.image.url.en=/geonetwork/srv/eng/resources.get.uuid?access=public&
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.fi=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.sv=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
+search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.en=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
 
 # Metadata catalogue channel config
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.server=http://localhost
-search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/en/csw
+search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/eng/csw
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.queryParams=SERVICE=CSW&VERSION=2.0.2&request=GetDomain&PropertyName=
 # List of fields to show in advanced form (values retrieved by GetDomain requests)
 search.channel.METADATA_CATALOGUE_CHANNEL.fields=type,serviceType,Title,OrganisationName,Subject,TopicCategory,Language,ResourceLanguage
@@ -96,20 +101,18 @@ search.channel.METADATA_CATALOGUE_CHANNEL.field.serviceType.filterOp=COMP_EQUAL
 search.channel.METADATA_CATALOGUE_CHANNEL.field.Language.mustMatch=true
 search.channel.METADATA_CATALOGUE_CHANNEL.field.ResourceLanguage.mustMatch=true
 
+
 # How many threads are created into a wfs executor thread pool, defaults to 5
 #wfsexecutorservice.threadcount=15
 
 # bundles that are added on runtime to view if user has one of configured role
-#actionhandler.GetAppSetup.dynamic.bundles = admin-layerselector, admin-layerrights
+actionhandler.GetAppSetup.dynamic.bundles = admin-layerselector, admin-layerrights
 
 # Linking dynamic bundles based on user roles
 # Properties are named 'actionhandler.GetAppSetup.dynamic.[BUNDLE ID].roles'
 #   with value as comma-separated list of role names that should be served the bundle
-#actionhandler.GetAppSetup.dynamic.bundle.admin-layerrights.roles = Admin
-#actionhandler.GetAppSetup.dynamic.bundle.admin-layerselector.roles = Admin
-
-# Used to configure a template view for publishing maps
-view.template.publish=3
+actionhandler.GetAppSetup.dynamic.bundle.admin-layerrights.roles = Admin
+actionhandler.GetAppSetup.dynamic.bundle.admin-layerselector.roles = Admin
 
 # redis
 redis.hostname=localhost

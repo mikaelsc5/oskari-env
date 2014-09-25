@@ -51,6 +51,7 @@
 - name: build oskari frontend distribution files
   shell:
     rm -rf ../dist/{{ oskari_version }};
+    export PATH=$PATH:/usr/local/bin;
     grunt release:{{ oskari_version }}:{{ oskari_minifierAppSetups }}
     chdir={{oskari_path}}/Oskari/tools
   when: oskari_development == false
@@ -64,9 +65,10 @@
 - name: build and deploy oskari-map
   shell:
     mvn clean install -P{{ oskari_mvn_profile }} &&
-    sudo cp webapp-map/target/oskari-map.war /opt/jetty-hightide/webapps/
+    sudo cp webapp-map/target/oskari-map.war /opt/jetty-hightide/webapps/ &&
+    touch /home/{{ansible_ssh_user}}/oskari-deploy
     chdir={{oskari_path}}/oskari-server/
-    creates=/opt/jetty-hightide/webapps/oskari-map.war
+    creates=/home/{{ansible_ssh_user}}/oskari-deploy
 
 
 - name: create db
