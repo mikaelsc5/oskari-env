@@ -15,8 +15,8 @@
 - name: Ensure Oracle JDK is downloaded
   shell:
     'wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u55-b13/jdk-7u55-linux-x64.tar.gz
-    chdir=/home/{{ansible_ssh_user}}/.ansible/pull/{{ ansible_hostname }}/roles/webservers/files/
-    creates=/home/{{ansible_ssh_user}}/.ansible/pull/{{ ansible_hostname }}/roles/webservers/files/jdk-7u55-linux-x64.tar.gz'
+    chdir=/home/{{ansible_ssh_user}}/.ansible/pull/{{ ansible_nodename }}/roles/webservers/files/
+    creates=/home/{{ansible_ssh_user}}/.ansible/pull/{{ ansible_nodename }}/roles/webservers/files/jdk-7u55-linux-x64.tar.gz'
 #    chdir=/vagrant/provisioning/roles/webservers/files/
 #    creates=/vagrant/provisioning/roles/webservers/files/jdk-7u55-linux-x64.tar.gz'
 # paths differ depending on push or pull, above is pull, below is push
