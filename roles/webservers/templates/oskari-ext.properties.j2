@@ -8,7 +8,8 @@ oskari.client.version=dist/{{ oskari_version }}
 oskari.init.db=false
 
 # Logger implementation - SystemLogger logs into System.out/err, replace with logging implementation of your choice
-oskari.logger=fi.nls.oskari.log.SystemLogger
+#oskari.logger=fi.nls.oskari.log.SystemLogger
+oskari.logger=fi.nls.oskari.log.NullLogger
 
 # true all ssl certs/hosts for debugging! configure certs on the server for production
 oskari.trustAllCerts=true
@@ -60,13 +61,19 @@ search.channel.OPENSTREETMAP_CHANNEL.className=fi.nls.oskari.search.OpenStreetMa
 search.channel.OPENSTREETMAP_CHANNEL.service.url=http://nominatim.openstreetmap.org/search
 
 # comma-separated list of search channel ids that should be registered for search service
-search.channels=GEONAMES_CHANNEL, METADATA_CATALOGUE_CHANNEL
+#search.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+search.channels=ELFGEOLOCATOR_CHANNEL,METADATA_CATALOGUE_CHANNEL
+
 
 # comma-separated list of id for search channel that will be used (defaulted to) if none are explicitly configured
-search.channels.default=GEONAMES_CHANNEL
+#search.channels.default=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+search.channels.default=ELFGEOLOCATOR_CHANNEL,METADATA_CATALOGUE_CHANNEL
+
 
 # comma-separated list of search channel ids used by GetSearchResult
-actionhandler.GetSearchResult.channels=GEONAMES_CHANNEL
+#actionhandler.GetSearchResult.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
+actionhandler.GetSearchResult.channels=ELFGEOLOCATOR_CHANNEL
+
 
 search.channel.METADATA_CATALOGUE_CHANNEL.className=fi.nls.oskari.search.channel.MetadataCatalogueChannelSearchService
 search.channel.METADATA_CATALOGUE_CHANNEL.image.url.fi=/geonetwork/srv/fin/resources.get.uuid?access=public&
@@ -76,8 +83,10 @@ search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.fi=/geonetwork/srv/eng/c
 search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.sv=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
 search.channel.METADATA_CATALOGUE_CHANNEL.fetchpage.url.en=/geonetwork/srv/eng/csw?Request=GetRecordById&version=2.0.2&outputSchema=csw:IsoRecord&id=
 
+
 # Metadata catalogue channel config
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.server=http://localhost
+#search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/en/csw
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.path=/geonetwork/srv/eng/csw
 search.channel.METADATA_CATALOGUE_CHANNEL.metadata.catalogue.queryParams=SERVICE=CSW&VERSION=2.0.2&request=GetDomain&PropertyName=
 # List of fields to show in advanced form (values retrieved by GetDomain requests)
@@ -153,3 +162,5 @@ myplaces.xmlns.prefix=oskari
 
 # Supported locales, comma separated and default first
 oskari.locales={{ oskari_locales }}
+
+view.published.usage.unrestrictedDomains = 54.216.109.137, locationframework.eu, localhost
