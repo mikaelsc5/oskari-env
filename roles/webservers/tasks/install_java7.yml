@@ -1,0 +1,14 @@
+---
+##################################################################################################################################################################
+# Open JDK - java version "1.7.0"
+# ################################################################################################################################################################
+
+- name: install openjdk 7
+  yum: name=java-1.7.0-openjdk-devel state=latest
+  sudo: yes
+  when: ansible_distribution == 'CentOS'
+
+- name: Install openjdk 7 and update APT package cache
+  apt: pkg=openjdk-7-jre state=latest install_recommends=yes
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
