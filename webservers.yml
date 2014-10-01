@@ -2,10 +2,9 @@
 # file: webservers.yml
 - hosts: webservers
   remote_user: vagrant
-#  accelerate: true
+  accelerate: true
 
   roles:
-    - common
+#    - common
     - dbservers
-    - webservers
-
+#    - webservers

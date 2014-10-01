@@ -4,6 +4,10 @@ db_name: "oskaridb"
 db_username: "vagrant"
 db_password: "secret"
 
+# db dump created with pg_dumpall
+db_dump_path: "/vagrant/elfdb_backup_20140925"
+restore_dump: False
+
 # geonetwork database params
 db_geonetwork_name: "geonetwork_2_10"
 

@@ -20,15 +20,6 @@
 #  sudo: yes
 #  when: ansible_distribution == 'Ubuntu'
 
-- name: Set locale
-  shell:
-    localedef -i en_US -f UTF-8 en_US.UTF-8 && touch locale-changed;
-    chdir=/home/vagrant/
-    creates=/home/vagrant/locale-changed
-  sudo: yes
-  when: ansible_distribution == 'Gentoo'
-
-
 - name: Install Ansible deps
   yum: name={{item}} state=latest
   with_items:

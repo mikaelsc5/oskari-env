@@ -1,7 +1,7 @@
 ---
 # file: roles/webservers/tasks/main.yml
 
-- include: install_java7oracle.yml
+- include: install_java7.yml
 - include: install_maven.yml
 - include: install_nginx.yml
 - include: install_redis.yml
@@ -21,33 +21,14 @@
   sudo: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
 
-- name: Ensure jetty services are started
-  shell:
-    rc-update add jetty default;
-    /etc/init.d/jetty start;
-  sudo: yes
-  when: ansible_distribution == 'Gentoo'
-
 
 - name: Ensure jetty-hightide services are started
   service: name=jetty-hightide state=started enabled=yes
   sudo: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
 
-- name: Ensure jetty-hightide services are started
-  shell:
-    rc-update add jetty-hightide default;
-    /etc/init.d/jetty-hightide start;
-  sudo: yes
-  when: ansible_distribution == 'Gentoo'
-
 
 - name: Ensure redis-server services are started
   service: name=redis-server state=started enabled=yes
   sudo: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
-
-- name: Ensure redis services are started
-  service: name=redis state=started enabled=yes
-  sudo: yes
-  when: ansible_distribution == 'Gentoo'

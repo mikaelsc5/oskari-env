@@ -4,11 +4,6 @@
   service: name=nginx state=restarted enabled=yes runlevel=default
   sudo: yes
 
-- name: restart postgresql-9.3
-  service: name=postgresql-9.3 state=restarted enabled=yes runlevel=default
-  sudo: yes
-  when: ansible_distribution == 'Gentoo' 
-
 
 - name: restart redis-server
   service: name=redis-server state=restarted enabled=yes runlevel=default

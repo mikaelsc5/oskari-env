@@ -24,13 +24,6 @@
   sudo: yes
   when: ansible_distribution == 'Ubuntu'
 
-- name: install nginx
-  portage: package={{item}} state=present sync=yes update=yes
-  with_items:
-    - www-servers/nginx
-  sudo: yes
-  when: ansible_distribution == 'Gentoo'
-
 
 - name: copy fixed init for nginx
   copy: src=conf/etc/init.d/nginx.sh dest=/etc/init.d/nginx mode=0755
@@ -42,12 +35,6 @@
   sudo: yes
   when: ansible_distribution == 'Ubuntu'
 
-# Gentoo includes proper init scripts, but no sites-enabled folder
-- name: Create sites-enabled nginx directory
-  file: path=/etc/nginx/sites-enabled/ state=directory owner=root group=root recurse=yes
-  sudo: yes
-  when: ansible_distribution == 'Gentoo'
-
 
 - name:  copy default for nginx
   copy: src=nginx-default dest=/etc/nginx/conf.d/default.conf
@@ -57,7 +44,7 @@
 - name:  copy default for nginx
   copy: src=nginx-default dest=/etc/nginx/sites-enabled/default
   sudo: yes
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Gentoo'
+  when: ansible_distribution == 'Ubuntu'
 
 
 - name: write nginx.conf 

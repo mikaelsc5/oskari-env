@@ -11,21 +11,6 @@
   sudo: yes
   when: ansible_distribution == 'Ubuntu'
 
-- name: install graphicsmagick
-  portage: package={{item}} state=present sync=yes update=yes
-  with_items:
-    - media-gfx/graphicsmagick
-  sudo: yes
-  when: ansible_distribution == 'Gentoo'
-
-- name: Install graphicsmagick
-  portage: package={{item}} state=present sync=yes update=yes
-  with_items:
-    - media-libs/libpng
-    - media-gfx/graphicsmagick
-  sudo: yes
-  when: ansible_distribution == 'Gentoo'
-
 
 - name: Clone oskari-server from github
   git: repo=https://github.com/nls-oskari/oskari-server.git
