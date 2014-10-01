@@ -37,8 +37,9 @@
   shell:
     rm -rf ../dist/{{ oskari_version }};
     export PATH=$PATH:/usr/local/bin;
-    grunt release:{{ oskari_version }}:{{ oskari_minifierAppSetups }}
+    grunt release:{{ oskari_version }}:{{ oskari_minifierAppSetups }} && touch /home/{{ansible_ssh_user}}/oskari-release
     chdir={{oskari_path}}/Oskari/tools
+    creates=/home/{{ansible_ssh_user}}/oskari-release
   when: oskari_development == false
 
 - name: set postgres db properties
