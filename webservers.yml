@@ -5,6 +5,6 @@
   accelerate: true
 
   roles:
-#    - common
+    - common
     - dbservers
-#    - webservers
+    - webservers
