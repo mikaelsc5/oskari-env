@@ -5,21 +5,14 @@
 - unarchive: src=redis-2.6.14.tar.gz dest=/home/{{ansible_ssh_user}}/
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
 
-- name: build redis
-  shell:
-    cd /home/{{ansible_ssh_user}}/redis-2.6.14;
-    make;
-    sudo mv /home/{{ansible_ssh_user}}/redis-2.6.14/src/redis-* /usr/sbin/;
-    sudo rm /usr/sbin/redis-*.o;
-    sudo rm /usr/sbin/redis-*.c;
-    sudo chmod 0755 /usr/sbin/redis-*;
-    sudo chown root:root /usr/sbin/redis-*;
-    sudo mkdir -p /etc/redis;
-    sudo cp {{ ansible_provisioning_path | default("/vagrant/provisioning") }}/conf/etc/redis/redis.conf /etc/redis/;
-    sudo mkdir -p /data/log/redis;
-    sudo cp {{ ansible_provisioning_path | default("/vagrant/provisioning") }}/conf/etc/init.d/redis-server.sh /etc/init.d/redis-server;
-    sudo chmod a+x /etc/init.d/redis-server;
-    creates=/etc/redis
+- name: install redis
+  yum: name=redis state=latest
+  sudo: yes
   notify:
     - start redis-server
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == 'CentOS'
+
+- name: install redis and update APT package cache
+  apt: pgk=redis state=latest 
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
