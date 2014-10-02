@@ -138,6 +138,8 @@
     /usr/bin/psql -d {{ db_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch postgis-extension-create
     chdir=/home/vagrant/
     creates=/home/vagrant/postgis-extension-create
+  sudo: yes
+  sudo_user: postgres
   when: restore_dump != True
 
 
@@ -156,4 +158,7 @@
     /usr/bin/psql -d {{ db_geonetwork_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch geonetwork-postgis-extension-create
     chdir=/home/vagrant/
     creates=/home/vagrant/geonetwork-postgis-extension-create
+  sudo: yes
+  sudo_user: postgres
   when: restore_dump != True
+
