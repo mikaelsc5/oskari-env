@@ -135,9 +135,8 @@
 
 - name: create postgis EXTENSION
   shell:
-    /usr/bin/psql -d {{ db_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch postgis-extension-create
-    chdir=/home/vagrant/
-    creates=/home/vagrant/postgis-extension-create
+    /usr/bin/psql -d {{ db_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch /tmp/postgis-extension-create
+    creates=/tmp/postgis-extension-create
   sudo: yes
   sudo_user: postgres
   when: restore_dump != True
@@ -155,9 +154,8 @@
 
 - name: create geonetwork postgis EXTENSION
   shell:
-    /usr/bin/psql -d {{ db_geonetwork_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch geonetwork-postgis-extension-create
-    chdir=/home/vagrant/
-    creates=/home/vagrant/geonetwork-postgis-extension-create
+    /usr/bin/psql -d {{ db_geonetwork_name }} -c "CREATE EXTENSION IF NOT EXISTS postgis;" && touch /tmp/geonetwork-postgis-extension-create
+    creates=/tmp/geonetwork-postgis-extension-create
   sudo: yes
   sudo_user: postgres
   when: restore_dump != True
