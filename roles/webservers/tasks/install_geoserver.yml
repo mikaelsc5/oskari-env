@@ -18,10 +18,11 @@
 - file: path=/opt/jetty/webapps/geoserver state=directory owner=root group=root
   sudo: yes
 
-- name: Extract geoserver and build OskariMarkFactory as lib
+- unarchive: src=geoserver.war dest=/opt/jetty/webapps/geoserver/
+  sudo: yes
+
+- name: Build OskariMarkFactory as lib
   shell:
-    cd /opt/jetty/webapps/geoserver/ &&
-    sudo jar xvf {{ ansible_provisioning_path | default("/vagrant/provisioning") }}/roles/webservers/files/geoserver.war &&
     cd ~/oskari-server/geoserver-ext/OskariMarkFactory &&
     mvn install &&
     sudo cp target/OskariMarkFactory-1.0.jar /opt/jetty/webapps/geoserver/WEB-INF/lib/
