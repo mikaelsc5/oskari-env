@@ -29,6 +29,6 @@
 
 
 - name: Ensure redis-server services are started
-  service: name=redis-server state=started enabled=yes
+  service: name=redis state=started enabled=yes
   sudo: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
