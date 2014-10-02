@@ -64,10 +64,8 @@
     creates=/home/{{ansible_ssh_user}}/postgres-db-create
 
 - name: add myplaces triggers
-  sudo: yes
-  sudo_user: postgres
   shell:
-    /usr/bin/psql -d {{ db_name }} -f {{oskari_path}}/oskari-server/content-resources/src/main/resources/sql/PostgreSQL/trigger-myplaces.sql && touch /tmp/myplaces-trigger-create
+    /usr/bin/psql -U postgres -d {{ db_name }} -f {{oskari_path}}/oskari-server/content-resources/src/main/resources/sql/PostgreSQL/trigger-myplaces.sql && touch /tmp/myplaces-trigger-create
     creates=/tmp/myplaces-trigger-create
 
 - name: build and deploy transport
