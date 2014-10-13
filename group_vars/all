@@ -28,4 +28,4 @@ oskari_path: "/home/{{ansible_ssh_user}}"
 
 # paths differ depending on push or pull, push is used by default and
 # when ansible_provisioning_path is defined pull is assumed
-ansible_provisioning_path: "/home/{{ansible_ssh_user}}/.ansible/pull/{{ ansible_nodename }}"
+ansible_provisioning_path: "/home/{{ansible_ssh_user}}/.ansible/pull/{{ ansible_fqdn }}"
