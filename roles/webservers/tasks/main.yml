@@ -12,23 +12,17 @@
 - include: install_geonetwork.yml
 
 - name: Ensure nginx services are started
-  service: name=nginx state=restarted enabled=yes
+  service: name=nginx state=started enabled=yes
   sudo: yes
-
 
 - name: Ensure jetty services are started
   service: name=jetty state=started enabled=yes
   sudo: yes
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
-
 
 - name: Ensure jetty-hightide services are started
   service: name=jetty-hightide state=started enabled=yes
   sudo: yes
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
 
-
-- name: Ensure redis-server services are started
+- name: Ensure redis services are started
   service: name=redis state=started enabled=yes
   sudo: yes
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'

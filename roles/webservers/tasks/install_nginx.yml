@@ -31,24 +31,24 @@
   when: ansible_distribution == 'CentOS'
 
 - name: copy fixed init for nginx
-  copy: src=nginx.init dest=/etc/init.d/nginx mode=0755 backup=yes
+  copy: src=nginx.init dest=/etc/init.d/nginx mode=0755
   sudo: yes
   when: ansible_distribution == 'Ubuntu'
 
 
 - name:  copy default for nginx
-  copy: src=nginx-default dest=/etc/nginx/conf.d/default.conf
+  template: src=nginx-default.j2 dest=/etc/nginx/conf.d/default.conf
   sudo: yes
   when: ansible_distribution == 'CentOS'
 
 - name:  copy default for nginx
-  copy: src=nginx-default dest=/etc/nginx/sites-enabled/default
+  template: src=nginx-default.j2 dest=/etc/nginx/sites-enabled/default
   sudo: yes
   when: ansible_distribution == 'Ubuntu'
 
 
 - name: write nginx.conf 
-  template: src='nginx.conf.j2' dest='/etc/nginx/nginx.conf'
+  template: src=nginx.conf.j2 dest='/etc/nginx/nginx.conf'
   notify:
     - restart nginx
   sudo: yes

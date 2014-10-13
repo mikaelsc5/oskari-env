@@ -65,8 +65,9 @@
 
 - name: add myplaces triggers
   shell:
-    /usr/bin/psql -U postgres -d {{ db_name }} -f {{oskari_path}}/oskari-server/content-resources/src/main/resources/sql/PostgreSQL/trigger-myplaces.sql && touch /tmp/myplaces-trigger-create
-    creates=/tmp/myplaces-trigger-create
+    /usr/bin/psql -U postgres -d {{ db_name }} -f {{oskari_path}}/oskari-server/content-resources/src/main/resources/sql/PostgreSQL/trigger-myplaces.sql && touch myplaces-trigger-create
+    chdir=/home/{{ ansible_user_id }}/
+    creates=/home/{{ ansible_user_id }}/myplaces-trigger-create
 
 - name: build and deploy transport
   shell:

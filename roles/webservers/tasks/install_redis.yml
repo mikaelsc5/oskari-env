@@ -9,7 +9,7 @@
   yum: name=redis state=latest
   sudo: yes
   notify:
-    - start redis-server
+    - start redis
   when: ansible_distribution == 'CentOS'
 
 - name: install redis and update APT package cache

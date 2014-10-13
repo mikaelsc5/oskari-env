@@ -15,8 +15,8 @@
 #    echo "export LANG=en_US.UTF-8" >> /etc/default/locale;
 #    echo "export LC_ALL=en_US.UTF-8" >> /etc/default/locale;
 #    dpkg-reconfigure locales && touch locale-changed;
-#    chdir=/home/vagrant/
-#    creates=/home/vagrant/locale-changed
+#    chdir=/home/{{ ansible_user_id }}/
+#    creates=/home/{{ ansible_user_id }}/locale-changed
 #  sudo: yes
 #  when: ansible_distribution == 'Ubuntu'
 
