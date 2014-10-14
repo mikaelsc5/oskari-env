@@ -26,3 +26,12 @@
 - name: Ensure redis services are started
   service: name=redis state=started enabled=yes
   sudo: yes
+
+- name: Open the correct IPTables ports (should test if save works on ubuntu, if so remove Centos when)
+  shell:
+    iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT;
+    iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT;
+  sudo: yes
+  when: ansible_distribution == 'CentOS'
+  notify:
+    - save iptables

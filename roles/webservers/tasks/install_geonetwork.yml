@@ -22,6 +22,13 @@
 - unarchive: src=portti-xsl.tar.gz dest=/opt/jetty-hightide/webapps/geonetwork/xsl/
   sudo: yes
 
+- name: replace broken icu4j version
+  shell:
+    cp {{ ansible_provisioning_path | default("/vagrant/provisioning") }}/roles/webservers/files/icu4j_2_8.jar . && rm icu4j-2.6.1.jar
+    chdir=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/lib/
+    removes=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/lib/icu4j-2.6.1.jar
+  sudo: yes
+
 - name: copy config for portti
   copy: src=config-portti.xml dest=/opt/jetty-hightide/webapps/geonetwork/WEB-INF/config-portti.xml
   notify:

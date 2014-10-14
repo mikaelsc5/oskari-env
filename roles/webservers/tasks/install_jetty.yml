@@ -113,6 +113,24 @@
     state=present
   sudo: yes
 
+- name: Comment out jmx
+  lineinfile:
+    dest=/opt/jetty-hightide/start.ini
+    regexp='^etc/jetty-jmx.xml'
+    line='#etc/jetty-jmx.xml'
+    backrefs=yes
+    state=present
+  sudo: yes
+
+- name: Disable JMX
+  lineinfile:
+    dest=/opt/jetty-hightide/start.ini
+    regexp='^OPTIONS=Server,jsp,jmx,resources,websocket,ext,plus,annotations,jta,jdbc'
+    line='OPTIONS=Server,jsp,resources,websocket,ext,plus,annotations,jta,jdbc'
+    backrefs=yes
+    state=present
+  sudo: yes
+
 - name: Copy external libs
   copy: src=jdbc/ dest=/opt/jetty-hightide/lib/jdbc/ owner=root group=root mode=0644
   sudo: yes

@@ -3,7 +3,7 @@ JETTY_HOME=/opt/jetty-hightide
 JETTY_LOGS=/data/log/jetty-hightide
 JETTY_PID=/var/run/jetty-hightide.pid
 
-JAVA_OPTIONS="${JAVA_OPTIONS} -server -Xms1024m -Xmx1024m"
+JAVA_OPTIONS="${JAVA_OPTIONS} -server -Xms1024m -Xmx3192m"
 JAVA_OPTIONS="${JAVA_OPTIONS} -XX:+UseConcMarkSweepGC -XX:+UseParNewGC"
 
 JAVA_OPTIONS="${JAVA_OPTIONS} -XX:+CMSClassUnloadingEnabled -XX:PermSize=512m -XX:MaxPermSize=768m"

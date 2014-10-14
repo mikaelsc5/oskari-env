@@ -23,7 +23,7 @@
   shell:
     cd /opt/jetty/webapps/geoserver/ &&
     sudo jar xvf {{ ansible_provisioning_path | default("/vagrant/provisioning") }}/roles/webservers/files/geoserver.war
-
+    creates=/opt/jetty/webapps/geoserver/WEB-INF
 
 - name: Build OskariMarkFactory as lib
   shell:

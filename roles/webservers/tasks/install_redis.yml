@@ -2,9 +2,6 @@
 #########################
 # Redis - redis-cli 2.8.3
 # #######################
-- unarchive: src=redis-2.6.14.tar.gz dest=/home/{{ansible_ssh_user}}/
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
-
 - name: install redis
   yum: name=redis state=latest
   sudo: yes

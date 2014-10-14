@@ -12,8 +12,8 @@ restore_dump: False
 db_geonetwork_name: "geonetwork_2_10"
 
 # oskari distribution params
-oskari_development: false
-oskari_version: 1.23
+oskari_development: "false"
+oskari_version: "1.24"
 oskari_minifierAppSetups: "../applications/elf/elf_guest/minifierAppSetup.json,../applications/elf/elf_published/minifierAppSetup.json"
 
 oskari_locales: "en_US,fi_FI,sv_SE"
