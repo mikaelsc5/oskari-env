@@ -26,6 +26,6 @@
   service: name=jetty-hightide state=restarted enabled=yes runlevel=default
   sudo: yes
 
-- name: save iptables
-  shell: service iptables save
+- name: restart iptables
+  service: name=iptables state=restarted
   sudo: yes

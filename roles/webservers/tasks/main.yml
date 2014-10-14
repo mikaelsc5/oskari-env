@@ -28,10 +28,8 @@
   sudo: yes
 
 - name: Open the correct IPTables ports (should test if save works on ubuntu, if so remove Centos when)
-  shell:
-    iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT;
-    iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT;
-  sudo: yes
+  copy: src=iptables.rules dest=/etc/sysconfig/iptables
   when: ansible_distribution == 'CentOS'
   notify:
-    - save iptables
+    - restart iptables
+  sudo: yes
