@@ -8,8 +8,7 @@ oskari.client.version=dist/{{ oskari_version }}
 oskari.init.db=false
 
 # Logger implementation - SystemLogger logs into System.out/err, replace with logging implementation of your choice
-#oskari.logger=fi.nls.oskari.log.SystemLogger
-oskari.logger=fi.nls.oskari.log.NullLogger
+oskari.logger=fi.nls.oskari.log.SystemLogger
 
 # true all ssl certs/hosts for debugging! configure certs on the server for production
 oskari.trustAllCerts=true
@@ -26,16 +25,13 @@ oskari.domain=http://localhost:8082/oskari-map
 oskari.ajax.url.prefix=/?
 
 # Used to configure a template view for publishing maps
-view.template.publish=2
+view.template.publish=3
 
-view.default.Guest=1
+view.default.Guest=2
 view.default.Admin=1
 view.default.User=1
 view.default.roles=Admin, User, Guest
 oskari.user.role.admin=Admin
-
-# domains which are always allowed to load published maps
-view.published.usage.unrestrictedDomains = 159.162.102.133, localhost
 
 # UserService implementation - create own implementation to integrate into actual systems and provide feedback for missing interface methods.
 #oskari.user.service=fi.nls.oskari.user.StandaloneUserService // Not needed anymore when using JAAS
@@ -51,14 +47,13 @@ oskari.user.role.admin = Admin
 #   className indicates the implementation class
 #   other properties are passed on to the implementation class.
 
-# GEONAMES search channel setting
-search.channel.GEONAMES_CHANNEL.className=fi.nls.oskari.search.channel.GeoNamesSearchChannel
-search.channel.GEONAMES_CHANNEL.service.url=http://api.geonames.org/searchJSON
-search.channel.GEONAMES_CHANNEL.username=arcticsdi
-
 # OpenStreetMap search channel settings
 search.channel.OPENSTREETMAP_CHANNEL.className=fi.nls.oskari.search.OpenStreetMapSearchChannel
 search.channel.OPENSTREETMAP_CHANNEL.service.url=http://nominatim.openstreetmap.org/search
+
+#ELF GeoLocator channel settings  - only for ELF application, works also with Oskari
+search.channel.ELFGEOLOCATOR_CHANNEL.className=fi.nls.oskari.search.channel.ELFGeoLocatorSearchChannel
+search.channel.ELFGEOLOCATOR_CHANNEL.service.url=http://54.247.101.37/elf/GeolocatorService
 
 # comma-separated list of search channel ids that should be registered for search service
 #search.channels=OPENSTREETMAP_CHANNEL, ELFGEOLOCATOR_CHANNEL
@@ -164,4 +159,4 @@ myplaces.xmlns.prefix=oskari
 # Supported locales, comma separated and default first
 oskari.locales={{ oskari_locales }}
 
-view.published.usage.unrestrictedDomains = 54.216.109.137, locationframework.eu, localhost
+view.published.usage.unrestrictedDomains = 54.216.109.137, 54.75.147.57, locationframework.eu, localhost
