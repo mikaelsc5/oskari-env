@@ -13,12 +13,12 @@
 
 
 - name: Clone oskari-server from github
-  git: repo=https://github.com/nls-oskari/oskari-server.git
+  git: repo=https://github.com/elf-oskari/oskari-server.git
        dest={{oskari_path}}/oskari-server
        version=master
 
 - name: Clone oskari from github
-  git: repo=https://github.com/nls-oskari/oskari.git
+  git: repo=https://github.com/elf-oskari/oskari.git
        dest={{oskari_path}}/Oskari
        version=master
 
