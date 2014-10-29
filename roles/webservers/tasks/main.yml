@@ -10,6 +10,7 @@
 - include: install_oskari.yml
 - include: install_geoserver.yml
 - include: install_geonetwork.yml
+- include: install_userguide.yml
 
 - name: Ensure nginx services are started
   service: name=nginx state=started enabled=yes

@@ -1,0 +1,10 @@
+---
+##############################################
+# userguide
+# ############################################
+
+- name: Extract UserGuide resourecs
+  unarchive: src=userguide.tar.gz dest={{oskari_path}}/Oskari/ creates={{oskari_path}}/Oskari/QuickStartGuide.pdf  
+  sudo: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu'
+
