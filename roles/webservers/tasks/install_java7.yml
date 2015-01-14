@@ -9,6 +9,6 @@
   when: ansible_distribution == 'CentOS'
 
 - name: Install openjdk 7 and update APT package cache
-  apt: pkg=openjdk-7-jre state=latest install_recommends=yes
+  apt: pkg=openjdk-7-jdk state=latest install_recommends=yes
   sudo: yes
   when: ansible_distribution == 'Ubuntu'
