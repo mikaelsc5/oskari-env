@@ -10,6 +10,11 @@
   when: ansible_distribution == 'CentOS'
 
 - name: install redis and update APT package cache
-  apt: pkg=redis state=latest 
+  apt: pkg=redis-server state=latest 
+  sudo: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: add redis as redis-server
+  file: path=/etc/init.d/redis src=/etc/init.d/redis-server state=link
   sudo: yes
   when: ansible_distribution == 'Ubuntu'
