@@ -118,7 +118,7 @@
   postgresql_user:
     name={{ db_username }}
     password={{ db_password }}
-    role_attr_flags=SUPERUSER,CREATEROLE,CREATEDB,INHERIT,LOGIN;
+    role_attr_flags=SUPERUSER,CREATEROLE,CREATEDB,INHERIT,LOGIN
   sudo: yes
   sudo_user: postgres
   when: restore_dump != True
