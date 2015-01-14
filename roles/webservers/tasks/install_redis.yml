@@ -10,6 +10,6 @@
   when: ansible_distribution == 'CentOS'
 
 - name: install redis and update APT package cache
-  apt: pgk=redis state=latest 
+  apt: pkg=redis state=latest 
   sudo: yes
   when: ansible_distribution == 'Ubuntu'
